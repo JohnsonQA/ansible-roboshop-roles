@@ -1,0 +1,38 @@
+- name: nodejs setup
+  include_role:
+    name: common
+    tasks_from: nodejs-setup
+
+- name: app setup
+  include_role:
+    name: common
+    tasks_from: app-setup
+
+- name: systemd setup
+  include_role:
+    name: common
+    tasks_from: systemd-setup
+
+- name: copy mongodb repo
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: install mongodb client
+  ansible.builtin.dnf:
+    name: mongodb-mongosh
+    state: present
+
+- name: check products or loaded or not
+  ansible.builtin.command: mongosh --host mongodb.roboshop.space --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+  register: db_output    # To extract the output from the abobe command. Similar like $() in shell
+
+- name: Print the output
+  ansible.builtin.debug:
+    msg: "{{ db_output }}"
+
+- name: Load the products to db
+  ansible.builtin.shell: mongosh --host mongodb.roboshop.space < /app/db/master-data.js
+  when: db_output.stdout | int < 0  
+
+
