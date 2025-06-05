@@ -10,13 +10,13 @@
     path: /app
     state: directory
 
-- name: Download the catalogue code
+- name: "Download the {{ component }} code"
   ansible.builtin.get_url:
-    url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
-    dest: /tmp/catalogue.zip
+    url: "https://roboshop-artifacts.s3.amazonaws.com/{{ component }}-v3.zip"
+    dest: "/tmp/{{ component }}.zip"
 
 - name: Extract the code in app directory
   ansible.builtin.unarchive:
-    src: /tmp/catalogue.zip
+    src: "/tmp/{{ component }}.zip"
     dest: /app
     remote_src: yes         #means file already exists in ansible control server remote machine. If don't give it will fail
