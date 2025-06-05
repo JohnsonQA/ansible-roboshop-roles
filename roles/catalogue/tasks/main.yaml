@@ -35,4 +35,9 @@
   ansible.builtin.shell: mongosh --host mongodb.roboshop.space < /app/db/master-data.js
   when: db_output.stdout | int < 0  
 
-
+- name: Deployment of {{ component }}
+  tags:
+  - deployment
+  import_role:                    #
+    name: common
+    tasks_from: deployment
