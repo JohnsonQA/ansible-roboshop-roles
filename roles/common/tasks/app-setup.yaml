@@ -20,3 +20,10 @@
     src: "/tmp/{{ component }}.zip"
     dest: /app
     remote_src: yes         #means file already exists in ansible control server remote machine. If don't give it will fail
+
+- name: Deployment of {{ component }}
+  tags:
+  - deployment
+  import_role:
+    name: common
+    tasks_from: deployment
