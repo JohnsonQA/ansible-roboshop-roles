@@ -38,6 +38,6 @@
 - name: Deployment of {{ component }}
   tags:
   - deployment
-  import_role:                    #
+  import_role:                    #Import_role will stop the exceution if any errors/syntax issue during runtime execution
     name: common
     tasks_from: deployment
