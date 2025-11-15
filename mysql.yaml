@@ -2,6 +2,6 @@
   hosts: "{{ component }}"
   become: yes
   # vars_files:
-  # - vault/mysql.yaml
+  # - vault/mysql.yaml   #This vault will be retrieved from the server not from repo folder
   roles:                # This will automatically load a folder called roles in current working directory and check for tasks and files.
   - "{{ component }}"

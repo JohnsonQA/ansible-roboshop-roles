@@ -33,11 +33,16 @@
 
 - name: Load the products to db
   ansible.builtin.shell: mongosh --host mongodb.roboshop.space < /app/db/master-data.js
-  when: db_output.stdout | int < 0  
+  when: db_output.stdout | int < 0
+  #ignore_errors: true  
+
+#Import_role will stop the exceution if any errors/syntax issue during runtime execution
+# import role and tags works together and execute all tasks in deployment
+# Include role and tags will not execute tasks
 
 # - name: Deployment of {{ component }}
 #   tags:
 #   - deployment
-#   import_role:                    #Import_role will stop the exceution if any errors/syntax issue during runtime execution
+#   import_role:                    
 #     name: common
 #     tasks_from: deployment
